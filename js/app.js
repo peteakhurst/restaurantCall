@@ -41,19 +41,24 @@ class UI {
     search.innerHTML = output;
   }
 
+  showFeedback(text) {
+    const feedback = document.querySelector('.feedback');
+    feedback.classList.add('showItem');
+    feedback.innerHTML = `<p>${text}</p>`
+    setTimeout(() => {
+      feedback.classList.remove('showItem')
+    }, 3000)
+  }
 }
 
 (function() {
 
   //  submit
   const searchForm = document.getElementById('searchForm');
-
   // input
   const searchCity = document.getElementById('searchCity');
-
   // Search Category
   const searchCategory = document.getElementById('searchCategory');
-
 
   const zomato = new ZOMATO();
 
@@ -68,6 +73,15 @@ class UI {
   // submit form
   searchForm.addEventListener('submit', event => {
     event.preventDefault();
+
+    const city = searchCity.value.toLowerCase();
+    const categoryID = parseInt(searchCategory.value);
+
+    if (city === "" || categoryID === 0) {
+      ui.showFeedback('please enter a city and select category')
+    }
+
+
   });
 
 
